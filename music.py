@@ -122,24 +122,24 @@ def download(songId,localPath):
     try:     
         songPath = localPath + name +"/"
         if not os.path.exists(songPath):
-            os.mkdir(songPath)                    
+            os.mkdir(songPath)
 
         lrcName = songPath + name +".lrc"
         if not os.path.exists(lrcName):
-            r = requests.get(lrcLink,headers=headers)            
+            r = requests.get(lrcLink,headers=headers)
             with open(lrcName,'wb') as f:
-                f.write(r.content)        
-
+                f.write(r.content)
+                
         mp3Name = songPath + name +".mp3"
         if not os.path.exists(mp3Name):
-            r = requests.get(songLink,headers=headers)            
+            r = requests.get(songLink,headers=headers)
             with open(mp3Name,'wb') as f:
                 f.write(r.content)        
 
             r = requests.get(songPicRadio,headers=headers)
             # picName = songPath +songid+".jpg"
             # with open(picName,'wb') as f:
-            #     f.write(r.content)         
+            #     f.write(r.content)        
             try:                  
                 setSongInfo(mp3Name,name,artistName,albumName,r.content)
             except:
@@ -153,5 +153,5 @@ def downLoadMusic(songIdList,localPath):
     with concurrent.futures.ThreadPoolExecutor(max_workers= works) as exector:
         for songId in songIdList:
             exector.submit(download,songId,localPath)
+            
 main1()
-    
